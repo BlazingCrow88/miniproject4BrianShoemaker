@@ -1,0 +1,88 @@
+<!--
+Brian Shoemaker
+2025F INF601 A Advanced Programming with Python
+Mini Project 4
+-->
+{% extends 'tasks/base.html' %}
+
+{% block title %}Register - Task Manager{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-6 mx-auto">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h3 class="mb-0"><i class="bi bi-person-plus"></i> Register</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Registration failed!</strong> Please correct the errors below.
+                            <ul class="mb-0 mt-2">
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                        <li>{{ field.label }}: {{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">
+                            <i class="bi bi-person"></i> Username *
+                        </label>
+                        {{ form.username }}
+                        <small class="form-text text-muted">
+                            Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+                        </small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">
+                            <i class="bi bi-envelope"></i> Email *
+                        </label>
+                        {{ form.email }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.password1.id_for_label }}" class="form-label">
+                            <i class="bi bi-lock"></i> Password *
+                        </label>
+                        {{ form.password1 }}
+                        <small class="form-text text-muted">
+                            Your password must contain at least 8 characters and can't be entirely numeric.
+                        </small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.password2.id_for_label }}" class="form-label">
+                            <i class="bi bi-lock-fill"></i> Confirm Password *
+                        </label>
+                        {{ form.password2 }}
+                        <small class="form-text text-muted">
+                            Enter the same password as before, for verification.
+                        </small>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="bi bi-person-plus"></i> Register
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <p class="mb-0">Already have an account?
+                    <a href="{% url 'login' %}" class="text-decoration-none">
+                        <i class="bi bi-box-arrow-in-right"></i> Login here
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
